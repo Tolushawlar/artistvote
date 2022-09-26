@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  Herme's | Vote
+{% endblock title %}
+
+{% block content %}
+<br><br>
+<section>
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 order-lg-2">
+          <div class="p-5">
+            <img class="img-fluid rounded-circle" src="{% static "img/03.jpg" %}" alt="" style="width: 250px; height:250px">
+          </div>
+        </div>
+        <div class="col-lg-6 order-lg-1 text-center">
+          <div class="p-3">
+            <h2 class="display-4">Do You Know!</h2>
+            <p>{{ triva.info }}.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-4 order-lg-0">
+        </div>
+        <div class="col-lg-4 info-box ">
+          <div class="p-5 ">
+              <p class="text-center lead">Vote  |   {{ award.award_name }}</p>
+            <form action="/vote_save" method="POST">
+                {% csrf_token %}
+                {% for artist in c %}
+                    <input type="hidden" name="award_id" value="{{ artist.award.id }}">
+                        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                            <span class="info d-inline-block float-right">
+                                <div class="form-check">
+                                    <input 
+                                        type="radio"
+                                        name="artist"
+                                        class="form-check-input"
+                                        id="artist{{ forloop.counter }}"
+                                        value="{{ artist.id }}"
+                                        required
+                                    />
+                                    <label for="artist{{ forloop.counter }}">{{ artist.artist }}</label> 
+                                    <div class="image">
+                                    <img src="{% static "img/03.jpg" %}" class="img-circle elevation-2" alt="User Image">
+                                    </div>           
+                              </div>
+                        </span>
+                    </div>
+                {% endfor %}
+                <input type="submit" name="voting" value="Vote" class="btn btn-success btn-md btn-block mt-4">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock content %}

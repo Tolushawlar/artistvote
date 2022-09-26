@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  Herme's | Results
+{% endblock title %}
+
+{% block content %}
+<script src="{% static "zingchart/zingchart.min.js" %}"></script>
+<script src="{% static "vendor/jquery/jquery.min.js" %}"></script>
+
+<br><br>
+<section>
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 order-lg-2">
+          <div class="p-5">
+            <img class="img-fluid rounded-circle" src="{% static "img/03.jpg" %}" alt="" style="width: 250px; height:250px">
+          </div>
+        </div>
+        <div class="col-lg-6 order-lg-1 text-center">
+          <div class="p-3">
+            <h2 class="display-4">Do You Know!</h2>
+            <p>{{ triva.info }}.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>        
+  <section>
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-4 order-lg-0">
+        </div>
+        <div class="col-lg-4 ">
+            <h2 class="text-center mb-5">{{question.question_text}}</h2>
+            <ul class="list-group mb-5">
+                {% for choice in c %}
+                    <li class="list-group-item">
+                        {{ choice.artist }} <span class="badge badge-success float-right">{{ choice.votes }} vote{{ choice.votes | pluralize }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <div class="container">
+    <div id="myChart"></div>
+  </div>
+  <script>
+
+    var state ={
+        'items': [],
+        'values': []
+    }
+
+    var dataURL = '/resultsdata/{{ award.id }}/';
+
+    $.ajax({
+        method:'GET',
+        url: dataURL,
+        success: function(response){
+            console.log('RESPONSE', response)
+            for(var i in response){
+                var key = Object.keys(response[i])[0]
+                var value = Object.values(response[i])[0]
+
+                state.items.push(key)
+                state.values.push(value)
+            }
+            console.log(state)
+            buildChart()
+        }
+    })
+
+    function buildChart(){
+        var chartData = {
+            'type': "bar",
+            "scale-x":{
+                "values":state.items
+            },
+            "series":[
+                {
+                    "values":state.values
+                }
+            ]
+        }
+
+        zingchart.render({
+            id:'myChart',
+            data: chartData,
+        });
+    }
+
+  </script>
+{% endblock content %}
