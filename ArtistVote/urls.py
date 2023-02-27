@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from voteapp import  views as voteViews 
 
 urlpatterns = [
@@ -24,5 +24,9 @@ urlpatterns = [
     path('<int:award_id>/results', voteViews.result, name='Results'),
     path('resultsdata/<int:data_id>/', voteViews.resultsData, name="ResultData"),
     path('about', voteViews.aboutUs, name="About"),
+    path('categories', voteViews.categories, name="Categories"),
     path('admin/', admin.site.urls),
+    # urls for authentication system
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('register/', voteViews.Signup.as_view(), name='Register'),
 ]

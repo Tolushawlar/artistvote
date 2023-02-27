@@ -127,3 +127,8 @@ STATICFILES_DIRS = (
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
+
+
+# users will be redirected to the home page after login
+LOGIN_REDIRECT_URL = 'Home'
+LOGOUT_REDIRECT_URL = "login"

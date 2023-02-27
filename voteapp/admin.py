@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import  Award, Choice, Triva
+from .models import  Award, Choice, Triva, Voted
 
 # changing the interface of the admin panel of the application
 admin.site.site_header = "Artistvote Admin"
@@ -19,3 +19,4 @@ class AwardAdmin(admin.ModelAdmin):
 
 admin.site.register(Award, AwardAdmin)
 admin.site.register(Triva)
+admin.site.register(Voted)

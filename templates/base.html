@@ -23,6 +23,9 @@
   <!-- Custom styles for this template -->
   <link href="{% static "css/one-page-wonder.min.css" %}" rel="stylesheet">
 
+  <style>
+    
+  </style>
 </head>
 
 <body>
@@ -40,11 +43,18 @@
                 <a class="nav-link" href="{% url "About" %}">About</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Log In</a>
+            <a class="nav-link" href="{% url "Categories" %}">Categories</a>
           </li>
+          {% if user.is_authenticated %}
+          
           <li class="nav-item">
-            <a class="nav-link" href="#">Logout</a>
+            <a class="nav-link" href="{% url "logout" %}">Logout | {{user.username}}</a>
           </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url "login" %}">Log In</a>
+          </li>
+          {% endif %}
         </ul>
       </div>
     </div>
@@ -55,7 +65,7 @@
 
 <br>
   <!-- Footer -->
-  <footer class="py-3 " style="background-color: rgb(128, 125, 124);" >
+  <footer class="py-3 " style="background-color: #fa511e" >
     <div class="container">
       <p class="m-0 text-center text-white small">Copyright &copy; Herme's Music 2019</p>
     </div>

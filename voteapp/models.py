@@ -27,4 +27,13 @@ class Triva(models.Model):
     def __str__(self):
         return self.info
 
+
+class Voted(models.Model):
+    userVoted = models.CharField(max_length=200, blank=True, null=True)
+
+    def __str__(self):
+        return self.userVoted
+
+
+
    

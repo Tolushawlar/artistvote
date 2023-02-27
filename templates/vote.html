@@ -33,7 +33,7 @@
           <div class="p-5 ">
               <p class="text-center lead">Vote  |   {{ award.award_name }}</p>
             <form action="/vote_save" method="POST">
-                {% csrf_token %}
+                {% csrf_token %} 
                 {% for artist in c %}
                     <input type="hidden" name="award_id" value="{{ artist.award.id }}">
                         <div class="user-panel mt-3 pb-3 mb-3 d-flex">

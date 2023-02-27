@@ -6,6 +6,35 @@
 {% endblock title %}
 
 {% block content %}
+
+<style>
+  .awards-section{
+    background: linear-gradient(0deg, #ff6a00 0%, #ee0979 100%);
+    padding: 20px;
+    
+  }
+
+  .our-team{
+    background: linear-gradient(0deg, #ff6a00 0%, #ee0979 100%);
+    padding: 20px;
+  }
+
+  .awards-section h2, h6{
+    color: white;
+    font-weight: bold;
+    padding: 20px;
+  }
+
+  .info-box{
+    padding: 25px;
+  }
+
+  .info-box:hover{
+    box-shadow: 3px 3px rgb(159, 159, 159) ;
+  }
+  
+  
+</style>
   <header class="masthead text-center text-white">
     <div class="masthead-content">
       <div class="container">
@@ -38,6 +67,73 @@
     </div>
   </section>
 
+  <br>
+ <div class="awards-section  container-fluid text-center">
+  <div class="bg-circle-1 bg-circle"></div>
+    <div class="bg-circle-2 bg-circle"></div>
+    <div class="bg-circle-3 bg-circle"></div>
+    <div class="bg-circle-4 bg-circle"></div>
+  <div class="row container-fluid">
+    <br>
+    <div class="col-md-4 col-sm-6 col-12"></div>
+    <div class="col-md-4 col-sm-6 col-12">
+      <h2 class="display-4 text-center"> Awards Categories</h2>
+      <h6 class=" text-center">The 2020 categories of award</h6>
+      <div class="container">
+        <hr>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-6 col-12"></div>
+  </div>
+
+  <div class="container">
+    
+  <div class="row ">
+    {% for item in award %}
+    <div class="col-md-4 col-sm-6 col-12" style="height: 200px">
+      <div class="info-box" style="height: 200px">
+        <span class="info-box-icon bg-primary"><i class="fas fa-music"></i></span>
+
+        <div class="info-box-content" style="line-height: 40px">
+          <span class="info-box-text lead">{{ item.award_name }}</span>
+          <span class="info-box-number">{{ item.artistNum }} Artist'{{ item.artistNum | pluralize }}</span>
+          <span class="row">
+            <div class="col-md-6 col-sm-6 col-12 pb-2">
+              {% if user.is_authenticated %}
+                  {% if voted|length > 0 %}
+                    <a href="#"><button type="button" class="btn btn-block btn-md btn-outline-info">Vote</button></a>                                            
+                  {% else %}
+                  <form method="POST">
+                    {% csrf_token %} 
+                    <input value="{{ user.username }}_{{ item.award_name}}" type="hidden" name="userVoted">
+                    <a href="/{{item.id}}" type="submit"><button type="button" class="btn btn-block btn-md btn-outline-info">Vote</button></a>
+                  </form>
+                  {% endif %}
+              {% else %}
+                <a href="{% url "login" %}"><button type="button" class="btn btn-block btn-md btn-outline-info">Vote</button></a>
+              {% endif %}
+            </div>
+            <hr>
+            <div class="col-md-6 col-sm-6 col-12">
+              {% if user.is_authenticated %}
+                <a href="{% url "Results" award_id=item.id %}"><button type="button" class="btn btn-block btn-outline-secondary">Result</button></a>
+              {% else %}
+                <a href="{% url "login" %}"><button type="button" class="btn btn-block btn-md btn-outline-info">Result</button></a>
+              {% endif %}
+            </div>            
+          </span>
+        </div>
+        <!-- /.info-box-content -->
+      </div>
+      <!-- /.info-box -->
+    </div>
+    {% endfor %}
+  </div>
+  </div>
+  <a href="{% url "Categories" %}" class="btn btn-primary btn-xl rounded-pill mt-5">View All</a>
+
+ </div>
+
   <section>
     <div class="container">
       <div class="row align-items-center">
@@ -55,6 +151,161 @@
       </div>
     </div>
   </section>
+ 
+
+  <br>
+  <div class="our-team container-fluid">
+    <div class="row container-fluid">
+      <br>
+      <div class="col-md-4 col-sm-6 col-12"></div>
+      <div class="col-md-4 col-sm-6 col-12">
+        <h2 class="display-4 text-center"> Our  Team</h2>
+        <h6 class=" text-center">Competent achievers in the industry</h6>
+        <div class="container">
+          <hr>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6 col-12"></div>
+    </div>
+  
+    <div class="container">
+      
+    <div class="row">
+      <div class="col-md-4">
+        <!-- Widget: user widget style 1 -->
+        <div class="card card-widget widget-user" >
+          <!-- Add the bg color to the header using any of the bg-* classes -->
+          <div class="widget-user-header bg-primary">
+            <h3 class="widget-user-username">Alexander Pierce</h3>
+            <h5 class="widget-user-desc">Founder &amp; CEO | Liryae Musics </h5>
+          </div>
+          <div class="widget-user-image">
+            <img class="img-circle elevation-2" src="{% static "img/01.jpg" %}" alt="User Avatar">
+          </div>
+          <div class="card-footer">
+            <div class="row">
+              <div class="col-sm-4 border-right">
+                <div class="description-block">
+                  <h5 class="description-header">23</h5>
+                  <span class="description-text">Albums</span>
+                </div>
+                <!-- /.description-block -->
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-4 border-right">
+                <div class="description-block">
+                  <h5 class="description-header">13</h5>
+                  <span class="description-text">Awards</span>
+                </div>
+                <!-- /.description-block -->
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-4">
+                <div class="description-block">
+                  <h5 class="description-header">35</h5>
+                  <span class="description-text">Singles</span>
+                </div>
+                <!-- /.description-block -->
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
+          </div>
+        </div>
+        <!-- /.widget-user -->
+      </div>
+      <!-- /.col -->
+      <div class="col-md-4">
+        <!-- Widget: user widget style 1 -->
+        <div class="card card-widget widget-user">
+          <!-- Add the bg color to the header using any of the bg-* classes -->
+          <div class="widget-user-header bg-primary">
+            <h3 class="widget-user-username">Ander Rice</h3>
+            <h5 class="widget-user-desc">Band Lead | Firys Music</h5>
+          </div>
+          <div class="widget-user-image">
+            <img class="img-circle elevation-2" src="{% static "img/02.jpg" %}" alt="User Avatar">
+          </div>
+          <div class="card-footer">
+            <div class="row">
+              <div class="col-sm-4 border-right">
+                <div class="description-block">
+                  <h5 class="description-header">3</h5>
+                  <span class="description-text">Albums</span>
+                </div>
+                <!-- /.description-block -->
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-4 border-right">
+                <div class="description-block">
+                  <h5 class="description-header">9</h5>
+                  <span class="description-text">Awards</span>
+                </div>
+                <!-- /.description-block -->
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-4">
+                <div class="description-block">
+                  <h5 class="description-header">35</h5>
+                  <span class="description-text">Singles</span>
+                </div>
+                <!-- /.description-block -->
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
+          </div>
+        </div>
+        <!-- /.widget-user -->
+      </div>
+      <!-- /.col -->
+      <div class="col-md-4">
+        <!-- Widget: user widget style 1 -->
+        <div class="card card-widget widget-user">
+          <!-- Add the bg color to the header using any of the bg-* classes -->
+          <div class="widget-user-header bg-primary">
+            <h3 class="widget-user-username">Benji Seehan</h3>
+            <h5 class="widget-user-desc">Vocalist | Trebee Boys</h5>
+          </div>
+          <div class="widget-user-image">
+            <img class="img-circle elevation-2" src="{% static "img/01.jpg" %}" alt="User Avatar">
+          </div>
+          <div class="card-footer">
+            <div class="row">
+              <div class="col-sm-4 border-right">
+                <div class="description-block">
+                  <h5 class="description-header">10</h5>
+                  <span class="description-text">Album</span>
+                </div>
+                <!-- /.description-block -->
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-4 border-right">
+                <div class="description-block">
+                  <h5 class="description-header">13</h5>
+                  <span class="description-text">Awards  </span>
+                </div>
+                <!-- /.description-block -->
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-4">
+                <div class="description-block">
+                  <h5 class="description-header">35</h5>
+                  <span class="description-text">Singles</span>
+                </div>
+                <!-- /.description-block -->
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
+          </div>
+        </div>
+        <!-- /.widget-user -->
+      </div>
+      <!-- /.col -->
+    </div>
+    </div>
+  </div>
 
   <section>
     <div class="container">
@@ -74,207 +325,4 @@
     </div>
   </section>
 
-  <br>
-  <div class="row container-fluid">
-    <br>
-    <div class="col-md-4 col-sm-6 col-12"></div>
-    <div class="col-md-4 col-sm-6 col-12">
-      <h2 class="display-4 text-center"> Awards Categories</h2>
-      <h6 class=" text-center">The 2020 categories of award</h6>
-      <div class="container">
-        <hr>
-      </div>
-    </div>
-    <div class="col-md-4 col-sm-6 col-12"></div>
-  </div>
-
-  <div class="container">
-    
-  <div class="row ">
-    {% for item in award %}
-    <div class="col-md-3 col-sm-6 col-12">
-      <div class="info-box">
-        <span class="info-box-icon bg-info"><i class="fas fa-music"></i></span>
-
-        <div class="info-box-content">
-          <span class="info-box-text lead"><i class="fas fa-chess-queen"></i> | {{ item.award_name }}</span>
-          <span class="info-box-number"><i class="fas fa-user-friends"></i> | {{ item.artistNum }} Artist'{{ item.artistNum | pluralize }}</span>
-          <span class="row">
-            <div class="col-md-6 col-sm-6 col-12 pb-2">
-              <a href="{% url "Vote" award_id=item.id %}"><button type="button" class="btn btn-block btn-md btn-outline-info">Vote</button></a>
-            </div>
-            <hr>
-            <div class="col-md-6 col-sm-6 col-12">
-              <a href="{% url "Results" award_id=item.id %}"><button type="button" class="btn btn-block btn-outline-secondary">Results</button></a>
-            </div>            
-          </span>
-        </div>
-        <!-- /.info-box-content -->
-      </div>
-      <!-- /.info-box -->
-    </div>
-    {% endfor %}
-  </div>
-  </div>
-
-  <br>
-  <div class="row container-fluid">
-    <br>
-    <div class="col-md-4 col-sm-6 col-12"></div>
-    <div class="col-md-4 col-sm-6 col-12">
-      <h2 class="display-4 text-center"> Our  Team</h2>
-      <h6 class=" text-center">Competent achievers in the industry</h6>
-      <div class="container">
-        <hr>
-      </div>
-    </div>
-    <div class="col-md-4 col-sm-6 col-12"></div>
-  </div>
-
-  <div class="container">
-    
-  <div class="row">
-    <div class="col-md-4">
-      <!-- Widget: user widget style 1 -->
-      <div class="card card-widget widget-user" >
-        <!-- Add the bg color to the header using any of the bg-* classes -->
-        <div class="widget-user-header bg-info">
-          <h3 class="widget-user-username">Alexander Pierce</h3>
-          <h5 class="widget-user-desc">Founder &amp; CEO | Liryae Musics </h5>
-        </div>
-        <div class="widget-user-image">
-          <img class="img-circle elevation-2" src="{% static "img/01.jpg" %}" alt="User Avatar">
-        </div>
-        <div class="card-footer">
-          <div class="row">
-            <div class="col-sm-4 border-right">
-              <div class="description-block">
-                <h5 class="description-header">23</h5>
-                <span class="description-text">Albums</span>
-                <i class="fas fa-coins"></i>
-              </div>
-              <!-- /.description-block -->
-            </div>
-            <!-- /.col -->
-            <div class="col-sm-4 border-right">
-              <div class="description-block">
-                <h5 class="description-header">13</h5>
-                <span class="description-text">Awards</span>
-                <i class="fas fa-award"></i>
-              </div>
-              <!-- /.description-block -->
-            </div>
-            <!-- /.col -->
-            <div class="col-sm-4">
-              <div class="description-block">
-                <h5 class="description-header">35</h5>
-                <span class="description-text">Singles</span>
-                <i class="fab fa-itunes-note"></i>
-              </div>
-              <!-- /.description-block -->
-            </div>
-            <!-- /.col -->
-          </div>
-          <!-- /.row -->
-        </div>
-      </div>
-      <!-- /.widget-user -->
-    </div>
-    <!-- /.col -->
-    <div class="col-md-4">
-      <!-- Widget: user widget style 1 -->
-      <div class="card card-widget widget-user">
-        <!-- Add the bg color to the header using any of the bg-* classes -->
-        <div class="widget-user-header bg-info">
-          <h3 class="widget-user-username">Ander Rice</h3>
-          <h5 class="widget-user-desc">Band Lead | Firys Music</h5>
-        </div>
-        <div class="widget-user-image">
-          <img class="img-circle elevation-2" src="{% static "img/02.jpg" %}" alt="User Avatar">
-        </div>
-        <div class="card-footer">
-          <div class="row">
-            <div class="col-sm-4 border-right">
-              <div class="description-block">
-                <h5 class="description-header">3</h5>
-                <span class="description-text">Albums</span>
-                <i class="fas fa-coins"></i>
-              </div>
-              <!-- /.description-block -->
-            </div>
-            <!-- /.col -->
-            <div class="col-sm-4 border-right">
-              <div class="description-block">
-                <h5 class="description-header">9</h5>
-                <span class="description-text">Awards</span>
-                <i class="fas fa-award"></i>
-              </div>
-              <!-- /.description-block -->
-            </div>
-            <!-- /.col -->
-            <div class="col-sm-4">
-              <div class="description-block">
-                <h5 class="description-header">35</h5>
-                <span class="description-text">Singles</span>
-                <i class="fab fa-itunes-note"></i>
-              </div>
-              <!-- /.description-block -->
-            </div>
-            <!-- /.col -->
-          </div>
-          <!-- /.row -->
-        </div>
-      </div>
-      <!-- /.widget-user -->
-    </div>
-    <!-- /.col -->
-    <div class="col-md-4">
-      <!-- Widget: user widget style 1 -->
-      <div class="card card-widget widget-user">
-        <!-- Add the bg color to the header using any of the bg-* classes -->
-        <div class="widget-user-header bg-info">
-          <h3 class="widget-user-username">Benji Seehan</h3>
-          <h5 class="widget-user-desc">Vocalist | Trebee Boys</h5>
-        </div>
-        <div class="widget-user-image">
-          <img class="img-circle elevation-2" src="{% static "img/01.jpg" %}" alt="User Avatar">
-        </div>
-        <div class="card-footer">
-          <div class="row">
-            <div class="col-sm-4 border-right">
-              <div class="description-block">
-                <h5 class="description-header">10</h5>
-                <span class="description-text">Album</span>
-                <i class="fas fa-coins"></i>
-              </div>
-              <!-- /.description-block -->
-            </div>
-            <!-- /.col -->
-            <div class="col-sm-4 border-right">
-              <div class="description-block">
-                <h5 class="description-header">13</h5>
-                <span class="description-text">Awards  </span>
-                <i class="fas fa-award"></i>
-              </div>
-              <!-- /.description-block -->
-            </div>
-            <!-- /.col -->
-            <div class="col-sm-4">
-              <div class="description-block">
-                <h5 class="description-header">35</h5>
-                <span class="description-text">Singles</span>
-                <i class="fab fa-itunes-note"></i>
-              </div>
-              <!-- /.description-block -->
-            </div>
-            <!-- /.col -->
-          </div>
-          <!-- /.row -->
-        </div>
-      </div>
-      <!-- /.widget-user -->
-    </div>
-    <!-- /.col -->
-  </div>
-  </div>
 {% endblock content %}

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  Herme's | Vote
+{% endblock title %}
+
+{% block content %}
+<style>
+    .awards-section{
+      background: linear-gradient(0deg, #ff6a00 0%, #ee0979 100%);
+      padding: 20px;
+      
+    }
+</style>
+<div class="awards-section masthead header masthead-content container-fluid text-center">
+    <div class="bg-circle-1 bg-circle"></div>
+      <div class="bg-circle-2 bg-circle"></div>
+      <div class="bg-circle-3 bg-circle"></div>
+      <div class="bg-circle-4 bg-circle"></div>
+    <div class="row container-fluid">
+      <br>
+      <div class="col-md-4 col-sm-6 col-12"></div>
+      <div class="col-md-4 col-sm-6 col-12">
+        <h2 class="display-4 text-center"> Awards Categories</h2>
+        <h6 class=" text-center">The 2020 categories of award</h6>
+        <div class="container">
+          <hr>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6 col-12"></div>
+    </div>
+  
+    <div class="container">
+      
+    <div class="row ">
+      {% for item in award %}
+      <div class="col-md-4 col-sm-6 col-12">
+        <div class="info-box" style="height: 200px">
+          <span class="info-box-icon bg-primary"><i class="fas fa-music"></i></span>
+  
+          <div class="info-box-content">
+            <span class="info-box-text lead">{{ item.award_name }}</span>
+            <span class="info-box-number">{{ item.artistNum }} Artist'{{ item.artistNum | pluralize }}</span>
+            <span class="row">
+              <div class="col-md-6 col-sm-6 col-12 pb-2">
+                <a href="{% url "Vote" award_id=item.id %}"><button type="button" class="btn btn-block btn-md btn-outline-info">Vote</button></a>
+              </div>
+              <hr>
+              <div class="col-md-6 col-sm-6 col-12">
+                <a href="{% url "Results" award_id=item.id %}"><button type="button" class="btn btn-block btn-outline-secondary">Result</button></a>
+              </div>            
+            </span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+      {% endfor %}
+    </div>
+    </div>  
+   </div>
+{% endblock content %}
